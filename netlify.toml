@@ -1,3 +1,3 @@
 [build]
   base = "frontend"               # Directory where your frontend code is located
-  publish = "frontend/.next"     # The .next folder with production assets
+  publish = "/.next"     # The .next folder with production assets
