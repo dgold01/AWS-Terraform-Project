@@ -1,7 +1,3 @@
-# netlify.toml
-
 [build]
   base = "frontend"               # Directory where your frontend code is located
-  publish = "frontend/build"      # Build output directory
-
-# Add more configuration options as needed
+  publish = "frontend/.next"     # The .next folder with production assets
