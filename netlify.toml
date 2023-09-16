@@ -1,4 +1,4 @@
 [build]
-base = "frontend"
+base = "frontend/my-app"
 command = "npm run build"
 publish = "/.next"
