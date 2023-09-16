@@ -1,0 +1,27 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches:
+      - main  # Replace with your repository's default branch.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Netlify uses a Linux-based build environment that is similar to Ubuntu.
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies and build
+      run: |
+        npm install  # or yarn install
+        npm run build  # Replace with your build command
+
+    - name: Deploy to Netlify
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --prod
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}  # Set up as secret in GitHub repository
+
