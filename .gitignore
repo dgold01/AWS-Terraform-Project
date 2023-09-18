@@ -4,3 +4,6 @@ terraform/lambda_functions/.DS_Store
 node_modules
 .DS_Store
 .terraform
+terraform/myplan.tfplan
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
