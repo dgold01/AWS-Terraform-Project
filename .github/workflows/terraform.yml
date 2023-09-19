@@ -76,17 +76,17 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        env: 
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform -chdir="./terraform" init -input=false
 
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
-        run: terraform -chdir="./terraform" fmt -check 
+        run: terraform -chdir="./terraform" fmt -check
 
       # Generates an execution plan for Terraform
       - name: Terraform Plan
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform -chdir="./terraform" plan -input=false
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
@@ -94,4 +94,4 @@ jobs:
       # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform -chdir="./terraform" apply -auto-approve -input=false 
+        run: terraform -chdir="./terraform" apply -auto-approve -input=false
