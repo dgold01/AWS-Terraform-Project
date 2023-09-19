@@ -76,20 +76,15 @@ jobs:
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
-        env:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-        run: terraform -chdir="./terraform" init -input=false
+        run: terraform -chdir="./terraform" init -input=false -backend-config="token=${{ secrets.TF_API_TOKEN }}"
 
       # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
-        env:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
         run: terraform -chdir="./terraform" fmt -check
 
       # Generates an execution plan for Terraform.
       - name: Terraform Plan
         env:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform -chdir="./terraform" plan -input=false
@@ -97,7 +92,6 @@ jobs:
       # Upload Terraform configuration to Terraform Cloud workspace
       - name: Upload to Terraform Cloud
         env:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           TFC_WORKSPACE: "aws-main" # Replace with your Terraform Cloud workspace name
         run: terraform -chdir="./terraform" workspace select $TFC_WORKSPACE && terraform -chdir="./terraform" push
 
@@ -106,7 +100,6 @@ jobs:
       # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
       - name: Terraform Apply
         env:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
