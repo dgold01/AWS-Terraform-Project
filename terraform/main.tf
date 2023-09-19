@@ -2,7 +2,7 @@
 terraform {
   cloud {
     organization = "example-org-193bbd"
-
+    
     workspaces {
       name = "aws-main"
     }
