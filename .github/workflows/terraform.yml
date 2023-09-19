@@ -89,6 +89,12 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform -chdir="./terraform" plan -input=false
 
+      # Upload Terraform configuration to Terraform Cloud workspace
+      - name: Upload to Terraform Cloud
+        env:
+          TFC_WORKSPACE: "aws-main" # Replace with your Terraform Cloud workspace name
+        run: terraform -chdir="./terraform" workspace select $TFC_WORKSPACE && terraform -chdir="./terraform" push
+
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
       # See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
