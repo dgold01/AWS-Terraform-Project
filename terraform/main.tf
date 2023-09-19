@@ -1,4 +1,15 @@
 
+terraform {
+  cloud {
+    organization = "example-org-193bbd"
+
+    workspaces {
+      name = "aws-main"
+    }
+  }
+}
+
+
 provider "aws" {
   region = "eu-north-1" # Replace with your desired region
   # Optional: If assuming a role
