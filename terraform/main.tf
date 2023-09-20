@@ -2,16 +2,25 @@
 terraform {
   cloud {
     organization = "example-org-193bbd"
-    
+
     workspaces {
       name = "aws-main"
     }
   }
 }
 
+variable "AWS_SECRET_ACCESS_KEY" {
+  description = "AWS Secret Access Key"
+}
+
+variable "AWS_ACCESS_KEY_ID" {
+  description = "AWS Access Key ID"
+}
+
 
 provider "aws" {
-  region = "eu-north-1" # Replace with your desired region
+  region     = "eu-north-1" # Replace with your desired region
+
   # Optional: If assuming a role
 }
 
